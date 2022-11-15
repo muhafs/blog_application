@@ -9,23 +9,41 @@ defineProps(["categories"]);
     <Head title="Muhamad Blog - Category" />
 
     <GuestLayout>
-        <h1 class="mb-4 rounded-lg bg-white p-4 text-3xl font-bold shadow-lg">
-            Category:
-            <span class="text-primary"> All </span>
+        <h1
+            class="mb-4 border-b-2 border-slate-300 pb-3 text-center text-3xl font-bold"
+        >
+            Post Categories
         </h1>
 
-        <div class="grid grid-cols-3 gap-4">
-            <Link
-                v-for="category in categories"
-                :key="category.id"
-                :href="route('category-detail', category.slug)"
-            >
-                <article class="rounded-lg bg-white p-3 shadow-lg">
-                    <h2 class="text-xl font-bold text-primary">
+        <template v-if="categories.length">
+            <div class="grid grid-cols-3 gap-4">
+                <Link
+                    v-for="category in categories"
+                    :key="category.id"
+                    :href="route('category-detail', category.slug)"
+                    class="relative overflow-hidden rounded-lg shadow-lg"
+                >
+                    <img
+                        src="https://via.placeholder.com/700x500"
+                        alt=""
+                        class="object-cover"
+                    />
+
+                    <h2
+                        class="absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 bg-slate-900/80 py-2 text-center font-bold text-white"
+                    >
                         {{ category.name }}
                     </h2>
-                </article>
-            </Link>
-        </div>
+                </Link>
+            </div>
+        </template>
+
+        <template v-else>
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            >
+                <p class="text-3xl font-bold">No Categories Found</p>
+            </div>
+        </template>
     </GuestLayout>
 </template>
