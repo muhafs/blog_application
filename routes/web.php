@@ -1,8 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use App\Models\Post;
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,17 +19,28 @@ use Inertia\Inertia;
 |
 */
 
+require __DIR__ . '/auth.php';
+
+
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return inertia('Home');
+})->name('home');
+
+Route::get('/about', function () {
+    return inertia('About');
+})->name('about');
+
+Route::controller(PostController::class)->group(function () {
+    Route::get('/blog', 'index')->name('blog');
+    Route::get('/blog/{post:slug}', 'show')->name('blog-detail');
 });
 
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/category', 'index')->name('category');
+    Route::get('/category/{category:slug}', 'show')->name('category-detail');
+});
+
+//! Dashboard
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-require __DIR__.'/auth.php';
