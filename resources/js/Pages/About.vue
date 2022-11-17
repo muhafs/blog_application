@@ -1,10 +1,7 @@
-<script setup>
-import GuestLayout from "@/Layouts/GuestLayout.vue";
-import { Head } from "@inertiajs/inertia-vue3";
-</script>
+<script></script>
 
 <template>
-    <Head title="Muhamad Blog - About" />
+	<Head title="Muhamad Blog - About" />
 
-    <GuestLayout> About </GuestLayout>
+	About
 </template>
