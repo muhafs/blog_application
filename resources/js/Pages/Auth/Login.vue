@@ -1,9 +1,10 @@
 <script setup>
-import Checkbox from "@/Components/Checkbox.vue";
-import InputError from "@/Components/InputError.vue";
+import FormCard from "@/Components/FormCard.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import AuthButton from "@/Components/AuthButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import InputError from "@/Components/InputError.vue";
+import Checkbox from "@/Components/Checkbox.vue";
+import AuthButton from "@/Components/AuthButton.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 defineProps({
@@ -31,7 +32,7 @@ const submit = () => {
 		{{ status }}
 	</div>
 
-	<form @submit.prevent="submit" class="mx-auto md:w-1/2">
+	<FormCard @submit.prevent="submit">
 		<div>
 			<InputLabel for="email" value="Email" />
 			<TextInput
@@ -59,20 +60,27 @@ const submit = () => {
 			<InputError class="mt-2" :message="form.errors.password" />
 		</div>
 
-		<div class="mt-4 block">
+		<div class="mt-4 flex justify-between">
 			<label class="flex items-center">
 				<Checkbox name="remember" v-model:checked="form.remember" />
-				<span class="ml-2 text-sm text-gray-600">Remember me</span>
+				<span class="ml-2 text-sm text-primary">Remember me</span>
 			</label>
-		</div>
 
-		<div class="mt-4 flex items-center justify-end">
 			<Link
 				v-if="canResetPassword"
 				:href="route('password.request')"
-				class="text-sm text-gray-600 underline hover:text-gray-900"
+				class="text-sm text-primary underline hover:text-primary/70"
 			>
 				Forgot your password?
+			</Link>
+		</div>
+
+		<div class="mt-4 flex items-end justify-end">
+			<Link
+				:href="route('register')"
+				class="text-sm text-primary underline hover:text-primary/70"
+			>
+				Don't have an account?
 			</Link>
 
 			<AuthButton
@@ -83,5 +91,5 @@ const submit = () => {
 				Log in
 			</AuthButton>
 		</div>
-	</form>
+	</FormCard>
 </template>

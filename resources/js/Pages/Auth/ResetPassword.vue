@@ -4,6 +4,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import AuthButton from "@/Components/AuthButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import FormCard from "@/Components/FormCard.vue";
 
 const props = defineProps({
 	email: String,
@@ -27,7 +28,7 @@ const submit = () => {
 <template>
 	<Head title="Reset Password" />
 
-	<form @submit.prevent="submit">
+	<FormCard @submit.prevent="submit">
 		<div>
 			<InputLabel for="email" value="Email" />
 			<TextInput
@@ -79,5 +80,5 @@ const submit = () => {
 				Reset Password
 			</AuthButton>
 		</div>
-	</form>
+	</FormCard>
 </template>

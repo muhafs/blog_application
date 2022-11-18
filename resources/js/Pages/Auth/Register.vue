@@ -3,6 +3,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import AuthButton from "@/Components/AuthButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import FormCard from "@/Components/FormCard.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 const form = useForm({
@@ -23,7 +24,7 @@ const submit = () => {
 <template>
 	<Head title="Register" />
 
-	<form @submit.prevent="submit" class="mx-auto md:w-1/2">
+	<FormCard @submit.prevent="submit">
 		<div>
 			<InputLabel for="name" value="Name" />
 			<TextInput
@@ -83,7 +84,7 @@ const submit = () => {
 		<div class="mt-4 flex items-center justify-end">
 			<Link
 				:href="route('login')"
-				class="text-sm text-gray-600 underline hover:text-gray-900"
+				class="text-sm text-primary underline hover:text-primary/70"
 			>
 				Already registered?
 			</Link>
@@ -96,5 +97,5 @@ const submit = () => {
 				Register
 			</AuthButton>
 		</div>
-	</form>
+	</FormCard>
 </template>

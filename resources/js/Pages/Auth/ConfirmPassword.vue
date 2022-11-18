@@ -4,6 +4,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import AuthButton from "@/Components/AuthButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import FormCard from "@/Components/FormCard.vue";
 
 const form = useForm({
 	password: "",
@@ -19,12 +20,12 @@ const submit = () => {
 <template>
 	<Head title="Confirm Password" />
 
-	<div class="mb-4 text-sm text-gray-600">
-		This is a secure area of the application. Please confirm your password
-		before continuing.
-	</div>
+	<FormCard @submit.prevent="submit">
+		<div class="mb-4 text-sm text-primary">
+			This is a secure area of the application. Please confirm your
+			password before continuing.
+		</div>
 
-	<form @submit.prevent="submit">
 		<div>
 			<InputLabel for="password" value="Password" />
 			<TextInput
@@ -48,5 +49,5 @@ const submit = () => {
 				Confirm
 			</AuthButton>
 		</div>
-	</form>
+	</FormCard>
 </template>
