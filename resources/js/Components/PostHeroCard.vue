@@ -1,11 +1,13 @@
 <template>
 	<div
-		class="mb-3 w-full overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg"
+		class="mb-12 w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg"
 	>
-		<img
-			src="https://via.placeholder.com/1200x500"
-			class="h-64 w-full object-cover"
-		/>
+		<div class="overflow-hidden rounded-b-3xl">
+			<img
+				src="https://via.placeholder.com/1200x500"
+				class="h-64 w-full object-cover"
+			/>
+		</div>
 
 		<div class="p-5 text-center">
 			<h2 class="mb-2 text-2xl font-bold">

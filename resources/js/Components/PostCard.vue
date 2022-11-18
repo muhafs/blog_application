@@ -1,6 +1,6 @@
 <template>
-	<article class="overflow-hidden rounded-lg bg-white shadow-lg">
-		<div class="relative">
+	<article class="overflow-hidden rounded-3xl bg-white shadow-lg">
+		<div class="relative overflow-hidden rounded-b-3xl">
 			<img
 				src="https://via.placeholder.com/500x400"
 				class="h-64 w-full object-cover"
@@ -8,13 +8,13 @@
 
 			<Link
 				:href="route('category-detail', post.category.slug)"
-				class="absolute top-0 left-0 rounded-sm bg-slate-800/70 p-2 text-white"
+				class="absolute top-0 left-0 rounded-br-xl bg-primary/70 p-3 text-white"
 				>{{ post.category.name }}</Link
 			>
 		</div>
 
 		<div class="p-5">
-			<h2 class="mb-2 text-lg font-bold">
+			<h2 class="mb-2 min-h-[50px] text-lg font-bold">
 				{{ post.title }}
 			</h2>
 
@@ -29,7 +29,7 @@
 				</span>
 			</h3>
 
-			<p class="mb-4 text-base">
+			<p class="mb-4 min-h-[40px] text-base">
 				{{ `${post.content.slice(0, 50)}...` }}
 			</p>
 

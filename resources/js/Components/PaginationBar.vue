@@ -19,7 +19,7 @@
 					:class="[
 						'border border-gray-300 bg-white py-2 px-3 text-gray-900',
 						{
-							'text-primary': link.active,
+							'text-secondary': link.active,
 							'rounded-l-lg ': index == 0,
 							'rounded-r-lg': index == links.length - 1,
 						},

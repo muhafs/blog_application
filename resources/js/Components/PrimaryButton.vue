@@ -2,7 +2,7 @@
 defineProps({
 	content: {
 		type: String,
-		default: "Read more »",
+		default: "read more »",
 	},
 	url: {
 		type: String,
@@ -14,7 +14,7 @@ defineProps({
 <template>
 	<Link
 		:href="url"
-		class="inline-block rounded-md bg-primary px-3 py-2 text-sm text-white"
+		class="inline-block rounded-full bg-primary px-4 py-2 text-sm text-secondary"
 	>
 		{{ content }}
 	</Link>

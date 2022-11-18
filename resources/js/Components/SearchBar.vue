@@ -19,7 +19,7 @@ onMounted(() => {
 		<input
 			type="search"
 			placeholder="Search..."
-			class="block w-full rounded-lg border border-gray-300 bg-white p-4 pr-10 text-sm text-gray-900 transition duration-300 focus:border-primary focus:ring-primary"
+			class="block w-full rounded-lg border border-gray-300 bg-white p-4 pr-10 text-sm text-primary transition duration-300 focus:border-primary focus:ring-primary"
 			:value="modelValue"
 			@input="$emit('update:modelValue', $event.target.value)"
 			ref="input"
@@ -30,7 +30,7 @@ onMounted(() => {
 		>
 			<svg
 				aria-hidden="true"
-				class="h-5 w-5 text-gray-500 dark:text-gray-400"
+				class="h-5 w-5 text-primary dark:text-primary"
 				fill="none"
 				stroke="currentColor"
 				viewBox="0 0 24 24"

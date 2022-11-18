@@ -1,4 +1,6 @@
 <script setup>
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+
 const props = defineProps(["post"]);
 </script>
 
@@ -7,7 +9,7 @@ const props = defineProps(["post"]);
 	<Head title="Muhamad Blog - Blog" />
 
 	<!-- Main -->
-	<article class="mx-auto w-8/12 rounded-lg bg-white p-4 shadow-lg">
+	<article class="mx-auto w-8/12 rounded-3xl bg-white p-6 shadow-lg">
 		<h2 class="mb-6 text-center text-3xl font-bold text-slate-900">
 			{{ post.title }}
 		</h2>
@@ -31,20 +33,17 @@ const props = defineProps(["post"]);
 			</span>
 		</section>
 
-		<img
-			src="https://via.placeholder.com/600x200"
-			class="w-full rounded-sm object-cover shadow-md"
-		/>
+		<div class="overflow-hidden rounded-3xl">
+			<img
+				src="https://via.placeholder.com/600x200"
+				class="w-full rounded-sm object-cover shadow-md"
+			/>
+		</div>
 
-		<p class="mt-4 text-base font-light text-slate-700">
+		<p class="my-4 text-base font-light text-slate-700">
 			{{ post.content }}
 		</p>
 
-		<Link
-			:href="route('blog')"
-			class="mt-4 inline-block rounded-md bg-primary px-3 py-1 text-white"
-		>
-			« back
-		</Link>
+		<PrimaryButton :url="route('blog')" content="« back" />
 	</article>
 </template>

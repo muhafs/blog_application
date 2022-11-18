@@ -1,8 +1,8 @@
 <template>
-    <div class="flex items-center">
-        <h1 class="font-bold uppercase text-primary">Muhamad Blog</h1>
-    </div>
-    <!-- <svg
+	<div class="flex items-center">
+		<h1 class="font-bold uppercase text-secondary">Muhamad Blog</h1>
+	</div>
+	<!-- <svg
         viewBox="0 0 316 316"
         xmlns="http://www.w3.org/2000/svg"
         class="text-primary fill-current"
