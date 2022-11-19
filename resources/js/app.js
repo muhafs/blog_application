@@ -21,16 +21,15 @@ createInertiaApp({
 			import.meta.glob("./Pages/**/*.vue")
 		);
 
-		if (name.startsWith("Admin/")) {
+		if (name.startsWith("Dashboard")) {
 			page.default.layout = AuthenticatedLayout;
 		} else {
 			page.default.layout = GuestLayout;
 		}
 
-		return page;
-
-		// console.log(page);
 		// console.log(name);
+
+		return page;
 	},
 	setup({ el, app, props, plugin }) {
 		return createApp({ render: () => h(app, props) })

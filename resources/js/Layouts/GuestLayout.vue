@@ -17,7 +17,7 @@ const showingNavigationDropdown = ref(false);
 			<!-- Primary Navigation Menu -->
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="flex h-16 items-center justify-between">
-					<div class="flex">
+					<div class="flex h-full">
 						<!-- Logo -->
 						<div class="flex shrink-0 items-center">
 							<Link :href="route('home')">

@@ -15,18 +15,18 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="relative mx-auto mb-8 w-8/12">
+	<div class="relative mx-auto mb-8 w-6/12">
 		<input
 			type="search"
 			placeholder="Search..."
-			class="block w-full rounded-lg border border-gray-300 bg-white p-4 pr-10 text-sm text-primary transition duration-300 focus:border-primary focus:ring-primary"
+			class="block w-full rounded-full border border-gray-300 bg-white pl-6 pr-10 text-sm text-primary transition duration-300 focus:border-primary"
 			:value="modelValue"
 			@input="$emit('update:modelValue', $event.target.value)"
 			ref="input"
 		/>
 
 		<div
-			class="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3"
+			class="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-4"
 		>
 			<svg
 				aria-hidden="true"
