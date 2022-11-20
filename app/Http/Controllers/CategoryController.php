@@ -51,12 +51,13 @@ class CategoryController extends Controller
 		// dd($category->posts->when(request('search'), function ($query, $search) {
 		// 	return $query->where('title', 'like', "%{$search}%");
 		// }));
-		$posts = Post::where('category_id', $category->id)
+		$posts = Post::query()->where('category_id', $category->id)
 			->when(request('search'), function ($query, $search) {
 				$query->where('title', 'like', "%{$search}%");
 			})
 			->orderBy('id', 'desc')
-			->get();
+			->paginate(10)
+			->withQueryString();
 
 		$category = [
 			'posts' => $posts,

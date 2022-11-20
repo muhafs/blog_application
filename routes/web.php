@@ -23,24 +23,28 @@ require __DIR__ . '/auth.php';
 
 
 Route::get('/', function () {
-    return inertia('Home');
+	return inertia('Home');
 })->name('home');
 
 Route::get('/about', function () {
-    return inertia('About');
+	return inertia('About');
 })->name('about');
 
 Route::controller(PostController::class)->group(function () {
-    Route::get('/blog', 'index')->name('blog');
-    Route::get('/blog/{post:slug}', 'show')->name('blog-detail');
+	Route::get('/blog', 'index')->name('blog');
+	Route::get('/blog/{post:slug}', 'show')->name('blog-detail');
 });
 
 Route::controller(CategoryController::class)->group(function () {
-    Route::get('/category', 'index')->name('category');
-    Route::get('/category/{category:slug}', 'show')->name('category-detail');
+	Route::get('/category', 'index')->name('category');
+	Route::get('/category/{category:slug}', 'show')->name('category-detail');
 });
 
 //! Dashboard
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+// 	return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/admin', function () {
+	return Inertia::render('Admin');
+})->middleware(['auth', 'verified'])->name('admin');

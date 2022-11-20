@@ -3,11 +3,11 @@ import CategoryHeader from "@/Components/CategoryHeader.vue";
 import SearchBar from "@/Components/SearchBar.vue";
 import NotFound from "@/Components/NotFound.vue";
 import PostCard from "@/Components/PostCard.vue";
+import PaginationBar from "@/Components/PaginationBar.vue";
 import { ref, watch } from "vue";
 
 import { Inertia } from "@inertiajs/inertia";
 import { debounce } from "lodash";
-import moment from "moment";
 
 const props = defineProps(["category"]);
 
@@ -35,10 +35,10 @@ watch(
 	<SearchBar v-model="search" />
 
 	<!-- Main -->
-	<template v-if="category.posts.length">
-		<div class="grid grid-cols-3 gap-4">
+	<template v-if="category.posts.data.length">
+		<div class="mb-8 grid grid-cols-3 gap-4">
 			<PostCard
-				v-for="(post, index) in category.posts"
+				v-for="(post, index) in category.posts.data"
 				:key="index"
 				:post="post"
 			/>
@@ -49,4 +49,7 @@ watch(
 	<template v-else>
 		<NotFound content="Posts" />
 	</template>
+
+	<!-- Pagination -->
+	<PaginationBar :links="category.posts.links" />
 </template>

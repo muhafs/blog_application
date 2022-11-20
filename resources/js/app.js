@@ -7,7 +7,7 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import AuthLayoutVue from "@/Layouts/AuthLayout.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 
 const appName =
@@ -21,8 +21,8 @@ createInertiaApp({
 			import.meta.glob("./Pages/**/*.vue")
 		);
 
-		if (name.startsWith("Dashboard")) {
-			page.default.layout = AuthenticatedLayout;
+		if (name.startsWith("Admin")) {
+			page.default.layout = AuthLayoutVue;
 		} else {
 			page.default.layout = GuestLayout;
 		}

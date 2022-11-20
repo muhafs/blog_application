@@ -12,6 +12,7 @@ const showingNavigationDropdown = ref(false);
 <template>
 	<div>
 		<div class="min-h-screen bg-ghost">
+			<!-- Navigation Bar -->
 			<nav class="bg-primary">
 				<!-- Primary Navigation Menu -->
 				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -66,6 +67,14 @@ const showingNavigationDropdown = ref(false);
 									</template>
 
 									<template #content>
+										<DropdownLink
+											:href="route('home')"
+											method="get"
+											as="button"
+										>
+											Home Page
+										</DropdownLink>
+
 										<DropdownLink
 											:href="route('logout')"
 											method="post"

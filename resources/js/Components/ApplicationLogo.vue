@@ -1,6 +1,8 @@
 <template>
 	<div class="flex items-center">
-		<h1 class="font-bold uppercase text-secondary">Muhamad Blog</h1>
+		<h1 class="font-bold uppercase text-secondary">
+			{{ content }}
+		</h1>
 	</div>
 	<!-- <svg
         viewBox="0 0 316 316"
@@ -12,3 +14,12 @@
         />
     </svg> -->
 </template>
+
+<script setup>
+const props = defineProps({
+	content: {
+		type: String,
+		default: "Muhamad Blog",
+	},
+});
+</script>
