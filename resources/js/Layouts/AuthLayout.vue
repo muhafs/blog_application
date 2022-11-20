@@ -87,7 +87,7 @@ const isOpen = ref(false);
 			</nav>
 
 			<!-- Page Content -->
-			<main class="w-full p-8">
+			<main class="w-full bg-ghost p-8">
 				<slot />
 			</main>
 		</div>

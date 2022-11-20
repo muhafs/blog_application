@@ -66,7 +66,7 @@ const user = computed(() => usePage().props.value.auth.user);
 					<div class="flex gap-4">
 						<SignButton
 							:url="route('login')"
-							content="Login"
+							content="Log in"
 							v-if="!user"
 						/>
 						<div class="relative ml-3" v-else>
