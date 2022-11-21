@@ -21,7 +21,7 @@ createInertiaApp({
 			import.meta.glob("./Pages/**/*.vue")
 		);
 
-		if (name.startsWith("Admin")) {
+		if (name.startsWith("Dashboard")) {
 			page.default.layout = AuthLayoutVue;
 		} else {
 			page.default.layout = GuestLayout;

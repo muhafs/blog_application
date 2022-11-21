@@ -41,10 +41,6 @@ Route::controller(CategoryController::class)->group(function () {
 });
 
 //! Dashboard
-// Route::get('/dashboard', function () {
-// 	return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/admin', function () {
-	return Inertia::render('Admin');
-})->middleware(['auth', 'verified'])->name('admin');
+Route::get('/dashboard', function () {
+	return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');

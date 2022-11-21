@@ -96,7 +96,7 @@ const user = computed(() => usePage().props.value.auth.user);
 
 								<template #content>
 									<DropdownLink
-										:href="route('admin')"
+										:href="route('dashboard')"
 										method="get"
 										as="button"
 									>
