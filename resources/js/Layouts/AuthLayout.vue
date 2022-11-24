@@ -51,74 +51,108 @@ const isOpen = ref(false);
 			<nav class="flex h-full flex-col justify-between p-4">
 				<div class="">
 					<Link
-						class="flex items-center gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
+						:href="route('dashboard')"
+						class="flex items-center justify-start gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
 					>
 						<span>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-								class="inline w-4 fill-current"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-monitor inline h-4 w-4"
 							>
-								<path
-									d="M456 32h-304C121.1 32 96 57.13 96 88v320c0 13.22-10.77 24-24 24S48 421.2 48 408V112c0-13.25-10.75-24-24-24S0 98.75 0 112v296C0 447.7 32.3 480 72 480h352c48.53 0 88-39.47 88-88v-304C512 57.13 486.9 32 456 32zM464 392c0 22.06-17.94 40-40 40H139.9C142.5 424.5 144 416.4 144 408v-320c0-4.406 3.594-8 8-8h304c4.406 0 8 3.594 8 8V392zM264 272h-64C186.8 272 176 282.8 176 296S186.8 320 200 320h64C277.3 320 288 309.3 288 296S277.3 272 264 272zM408 272h-64C330.8 272 320 282.8 320 296S330.8 320 344 320h64c13.25 0 24-10.75 24-24S421.3 272 408 272zM264 352h-64c-13.25 0-24 10.75-24 24s10.75 24 24 24h64c13.25 0 24-10.75 24-24S277.3 352 264 352zM408 352h-64C330.8 352 320 362.8 320 376s10.75 24 24 24h64c13.25 0 24-10.75 24-24S421.3 352 408 352zM400 112h-192c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32v-64C432 126.3 417.7 112 400 112z"
-								/>
+								<rect
+									x="2"
+									y="3"
+									width="20"
+									height="14"
+									rx="2"
+									ry="2"
+								></rect>
+								<line x1="8" y1="21" x2="16" y2="21"></line>
+								<line x1="12" y1="17" x2="12" y2="21"></line>
 							</svg>
 						</span>
 
 						<span
 							:class="[
 								'origin-left duration-300',
-								isOpen ? '' : 'scale-0',
+								isOpen ? '' : 'hidden ',
 							]"
 						>
 							Dashboard
 						</span>
 					</Link>
-
 					<Link
-						class="flex items-center gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
+						:href="route('dashboard')"
+						class="flex items-center justify-start gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
 					>
 						<span>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-								class="inline w-4 fill-current"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-file-text inline h-4 w-4"
 							>
 								<path
-									d="M456 32h-304C121.1 32 96 57.13 96 88v320c0 13.22-10.77 24-24 24S48 421.2 48 408V112c0-13.25-10.75-24-24-24S0 98.75 0 112v296C0 447.7 32.3 480 72 480h352c48.53 0 88-39.47 88-88v-304C512 57.13 486.9 32 456 32zM464 392c0 22.06-17.94 40-40 40H139.9C142.5 424.5 144 416.4 144 408v-320c0-4.406 3.594-8 8-8h304c4.406 0 8 3.594 8 8V392zM264 272h-64C186.8 272 176 282.8 176 296S186.8 320 200 320h64C277.3 320 288 309.3 288 296S277.3 272 264 272zM408 272h-64C330.8 272 320 282.8 320 296S330.8 320 344 320h64c13.25 0 24-10.75 24-24S421.3 272 408 272zM264 352h-64c-13.25 0-24 10.75-24 24s10.75 24 24 24h64c13.25 0 24-10.75 24-24S277.3 352 264 352zM408 352h-64C330.8 352 320 362.8 320 376s10.75 24 24 24h64c13.25 0 24-10.75 24-24S421.3 352 408 352zM400 112h-192c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32v-64C432 126.3 417.7 112 400 112z"
-								/>
+									d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+								></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="16" y1="13" x2="8" y2="13"></line>
+								<line x1="16" y1="17" x2="8" y2="17"></line>
+								<polyline points="10 9 9 9 8 9"></polyline>
 							</svg>
 						</span>
 
 						<span
 							:class="[
 								'origin-left duration-300',
-								isOpen ? '' : 'scale-0',
+								isOpen ? '' : 'hidden ',
 							]"
 						>
 							Posts
 						</span>
 					</Link>
-
 					<Link
-						class="flex items-center gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
+						:href="route('dashboard')"
+						class="flex items-center justify-start gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
 					>
 						<span>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-								class="inline w-4 fill-current"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-grid inline h-4 w-4"
 							>
-								<path
-									d="M456 32h-304C121.1 32 96 57.13 96 88v320c0 13.22-10.77 24-24 24S48 421.2 48 408V112c0-13.25-10.75-24-24-24S0 98.75 0 112v296C0 447.7 32.3 480 72 480h352c48.53 0 88-39.47 88-88v-304C512 57.13 486.9 32 456 32zM464 392c0 22.06-17.94 40-40 40H139.9C142.5 424.5 144 416.4 144 408v-320c0-4.406 3.594-8 8-8h304c4.406 0 8 3.594 8 8V392zM264 272h-64C186.8 272 176 282.8 176 296S186.8 320 200 320h64C277.3 320 288 309.3 288 296S277.3 272 264 272zM408 272h-64C330.8 272 320 282.8 320 296S330.8 320 344 320h64c13.25 0 24-10.75 24-24S421.3 272 408 272zM264 352h-64c-13.25 0-24 10.75-24 24s10.75 24 24 24h64c13.25 0 24-10.75 24-24S277.3 352 264 352zM408 352h-64C330.8 352 320 362.8 320 376s10.75 24 24 24h64c13.25 0 24-10.75 24-24S421.3 352 408 352zM400 112h-192c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32v-64C432 126.3 417.7 112 400 112z"
-								/>
+								<rect x="3" y="3" width="7" height="7"></rect>
+								<rect x="14" y="3" width="7" height="7"></rect>
+								<rect x="14" y="14" width="7" height="7"></rect>
+								<rect x="3" y="14" width="7" height="7"></rect>
 							</svg>
 						</span>
 
 						<span
 							:class="[
 								'origin-left duration-300',
-								isOpen ? '' : 'scale-0',
+								isOpen ? '' : 'hidden ',
 							]"
 						>
 							Categories
@@ -128,27 +162,39 @@ const isOpen = ref(false);
 
 				<div class="">
 					<Link
-						class="flex gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
+						:href="route('logout')"
+						method="post"
+						as="button"
+						class="flex w-full items-center gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
 					>
 						<span>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-								class="inline w-4 fill-current"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-log-out inline h-4 w-4"
 							>
 								<path
-									d="M456 32h-304C121.1 32 96 57.13 96 88v320c0 13.22-10.77 24-24 24S48 421.2 48 408V112c0-13.25-10.75-24-24-24S0 98.75 0 112v296C0 447.7 32.3 480 72 480h352c48.53 0 88-39.47 88-88v-304C512 57.13 486.9 32 456 32zM464 392c0 22.06-17.94 40-40 40H139.9C142.5 424.5 144 416.4 144 408v-320c0-4.406 3.594-8 8-8h304c4.406 0 8 3.594 8 8V392zM264 272h-64C186.8 272 176 282.8 176 296S186.8 320 200 320h64C277.3 320 288 309.3 288 296S277.3 272 264 272zM408 272h-64C330.8 272 320 282.8 320 296S330.8 320 344 320h64c13.25 0 24-10.75 24-24S421.3 272 408 272zM264 352h-64c-13.25 0-24 10.75-24 24s10.75 24 24 24h64c13.25 0 24-10.75 24-24S277.3 352 264 352zM408 352h-64C330.8 352 320 362.8 320 376s10.75 24 24 24h64c13.25 0 24-10.75 24-24S421.3 352 408 352zM400 112h-192c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32v-64C432 126.3 417.7 112 400 112z"
-								/>
+									d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+								></path>
+								<polyline points="16 17 21 12 16 7"></polyline>
+								<line x1="21" y1="12" x2="9" y2="12"></line>
 							</svg>
 						</span>
 
 						<span
 							:class="[
 								'origin-left duration-300',
-								isOpen ? '' : 'scale-0',
+								isOpen ? '' : 'hidden',
 							]"
 						>
-							Log out
+							Logout
 						</span>
 					</Link>
 				</div>
