@@ -6,7 +6,7 @@
 			<div class="border-b border-gray-200 bg-white p-6">
 				hello {{ user.name }}
 				<br />
-				You're logged in!
+				You're logged in! this page from folder Dashboard
 			</div>
 		</div>
 	</div>
