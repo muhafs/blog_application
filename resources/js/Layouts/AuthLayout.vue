@@ -1,250 +1,211 @@
 <script setup>
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
-import { reactive, ref } from "vue";
+import Dropdown from "@/Components/Dropdown.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
+import NavLink from "@/Components/NavLink.vue";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import { ref } from "vue";
 
-const isOpen = ref(true);
+const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-	<div class="flex min-h-screen w-full">
+	<div class="min-h-screen bg-ghost">
 		<!-- Navigation Bar -->
-		<aside
-			:class="[
-				'flex w-64 flex-col bg-primary text-secondary duration-300',
-				isOpen ? 'w-64' : 'w-20',
-			]"
-		>
-			<header class="relative p-4">
-				<!-- Main Icon -->
-				Logo
+		<nav class="bg-primary">
+			<!-- Primary Navigation Menu -->
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="flex h-16 justify-between">
+					<div class="flex">
+						<!-- Logo -->
+						<div class="flex shrink-0 items-center">
+							<Link :href="route('dashboard')">
+								<ApplicationLogo class="block h-9 w-auto" />
+							</Link>
+						</div>
 
-				<!-- Slider Icon -->
-				<span
-					:class="[
-						'absolute right-0 top-1/2 grid -translate-y-1/2 translate-x-1/2 cursor-pointer place-items-center rounded-full bg-secondary text-primary duration-300',
-						isOpen ? 'h-10 w-10' : 'h-6 w-6',
-					]"
-					@click="isOpen = !isOpen"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						:class="[
-							'feather feather-menu duration-300',
-							isOpen ? 'w-full' : 'w-4',
-						]"
-					>
-						<line x1="3" y1="12" x2="21" y2="12"></line>
-						<line x1="3" y1="6" x2="21" y2="6"></line>
-						<line x1="3" y1="18" x2="21" y2="18"></line>
-					</svg>
-				</span>
-			</header>
-
-			<nav class="flex h-full flex-col justify-between p-4">
-				<div class="">
-					<Link
-						:href="route('dashboard')"
-						class="flex items-center justify-start gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
-					>
-						<span>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-monitor inline h-4 w-4"
-							>
-								<rect
-									x="2"
-									y="3"
-									width="20"
-									height="14"
-									rx="2"
-									ry="2"
-								></rect>
-								<line x1="8" y1="21" x2="16" y2="21"></line>
-								<line x1="12" y1="17" x2="12" y2="21"></line>
-							</svg>
-						</span>
-
-						<span
-							:class="[
-								'origin-left duration-300',
-								isOpen ? '' : 'hidden ',
-							]"
+						<!-- Navigation Links -->
+						<div
+							class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
 						>
-							Dashboard
-						</span>
-					</Link>
-					<Link
-						:href="route('dashboard')"
-						class="flex items-center justify-start gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
-					>
-						<span>
+							<NavLink
+								:href="route('dashboard')"
+								:active="route().current('dashboard')"
+							>
+								Dashboard
+							</NavLink>
+
+							<NavLink
+								:href="route('dashboard.posts.index')"
+								:active="route().current('dashboard.posts*')"
+							>
+								Posts
+							</NavLink>
+
+							<NavLink
+								:href="route('dashboard.categories.index')"
+								:active="
+									route().current('dashboard.categories*')
+								"
+							>
+								Categories
+							</NavLink>
+						</div>
+					</div>
+
+					<div class="hidden sm:ml-6 sm:flex sm:items-center">
+						<!-- Settings Dropdown -->
+						<div class="relative ml-3">
+							<Dropdown align="right" width="48">
+								<template #trigger>
+									<span class="inline-flex rounded-md">
+										<button
+											type="button"
+											class="inline-flex items-center rounded-md border border-transparent bg-primary px-3 py-2 text-sm font-medium leading-4 text-secondary transition duration-150 ease-in-out hover:text-secondary/80 focus:outline-none"
+										>
+											{{ $page.props.auth.user.name }}
+
+											<svg
+												class="ml-2 -mr-0.5 h-4 w-4"
+												xmlns="http://www.w3.org/2000/svg"
+												viewBox="0 0 20 20"
+												fill="currentColor"
+											>
+												<path
+													fill-rule="evenodd"
+													d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+													clip-rule="evenodd"
+												/>
+											</svg>
+										</button>
+									</span>
+								</template>
+
+								<template #content>
+									<DropdownLink :href="route('home')">
+										Home Page
+									</DropdownLink>
+
+									<DropdownLink
+										:href="route('logout')"
+										method="post"
+										as="button"
+									>
+										Log Out
+									</DropdownLink>
+								</template>
+							</Dropdown>
+						</div>
+					</div>
+
+					<!-- Hamburger -->
+					<div class="-mr-2 flex items-center sm:hidden">
+						<button
+							@click="
+								showingNavigationDropdown =
+									!showingNavigationDropdown
+							"
+							class="inline-flex items-center justify-center rounded-md p-2 text-secondary transition duration-150 ease-in-out hover:bg-secondary hover:text-primary focus:bg-secondary/80 focus:text-primary/80 focus:outline-none"
+						>
 							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
+								class="h-6 w-6"
 								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-file-text inline h-4 w-4"
+								fill="none"
+								viewBox="0 0 24 24"
 							>
 								<path
-									d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-								></path>
-								<polyline points="14 2 14 8 20 8"></polyline>
-								<line x1="16" y1="13" x2="8" y2="13"></line>
-								<line x1="16" y1="17" x2="8" y2="17"></line>
-								<polyline points="10 9 9 9 8 9"></polyline>
+									:class="{
+										hidden: showingNavigationDropdown,
+										'inline-flex':
+											!showingNavigationDropdown,
+									}"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 6h16M4 12h16M4 18h16"
+								/>
+								<path
+									:class="{
+										hidden: !showingNavigationDropdown,
+										'inline-flex':
+											showingNavigationDropdown,
+									}"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M6 18L18 6M6 6l12 12"
+								/>
 							</svg>
-						</span>
+						</button>
+					</div>
+				</div>
+			</div>
 
-						<span
-							:class="[
-								'origin-left duration-300',
-								isOpen ? '' : 'hidden ',
-							]"
-						>
-							Posts
-						</span>
-					</Link>
-					<Link
+			<!-- Responsive Navigation Menu -->
+			<div
+				:class="{
+					block: showingNavigationDropdown,
+					hidden: !showingNavigationDropdown,
+				}"
+				class="sm:hidden"
+			>
+				<div class="space-y-1 pt-2 pb-3">
+					<ResponsiveNavLink
 						:href="route('dashboard')"
-						class="flex items-center justify-start gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
+						:active="route().current('dashboard')"
 					>
-						<span>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-grid inline h-4 w-4"
-							>
-								<rect x="3" y="3" width="7" height="7"></rect>
-								<rect x="14" y="3" width="7" height="7"></rect>
-								<rect x="14" y="14" width="7" height="7"></rect>
-								<rect x="3" y="14" width="7" height="7"></rect>
-							</svg>
-						</span>
+						Dashboard
+					</ResponsiveNavLink>
 
-						<span
-							:class="[
-								'origin-left duration-300',
-								isOpen ? '' : 'hidden ',
-							]"
-						>
-							Categories
-						</span>
-					</Link>
+					<ResponsiveNavLink
+						:href="route('dashboard.posts.index')"
+						:active="route().current('dashboard.posts*')"
+					>
+						Posts
+					</ResponsiveNavLink>
+
+					<ResponsiveNavLink
+						:href="route('dashboard.categories.index')"
+						:active="route().current('dashboard.categories*')"
+					>
+						Categories
+					</ResponsiveNavLink>
 				</div>
 
-				<div class="">
-					<Link
-						:href="route('dashboard.admin')"
-						class="flex w-full items-center gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
-					>
-						<span>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-home inline h-4 w-4"
-							>
-								<path
-									d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-								></path>
-								<polyline
-									points="9 22 9 12 15 12 15 22"
-								></polyline>
-							</svg>
-						</span>
+				<!-- Responsive Settings Options -->
+				<div class="border-t border-gray-200 pt-4 pb-1">
+					<div class="px-4">
+						<div class="text-base font-medium text-secondary">
+							{{ $page.props.auth.user.name }}
+						</div>
+						<div class="text-sm font-medium text-ghost">
+							{{ $page.props.auth.user.email }}
+						</div>
+					</div>
 
-						<span
-							:class="[
-								'origin-left duration-300',
-								isOpen ? '' : 'hidden',
-							]"
-						>
+					<div class="mt-3 space-y-1">
+						<ResponsiveNavLink :href="route('home')">
 							Home
-						</span>
-					</Link>
-					<Link
-						:href="route('logout')"
-						method="post"
-						as="button"
-						class="flex w-full items-center gap-x-4 rounded-full py-2 px-4 transition hover:bg-ghost/20"
-					>
-						<span>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-log-out inline h-4 w-4"
-							>
-								<path
-									d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
-								></path>
-								<polyline points="16 17 21 12 16 7"></polyline>
-								<line x1="21" y1="12" x2="9" y2="12"></line>
-							</svg>
-						</span>
+						</ResponsiveNavLink>
 
-						<span
-							:class="[
-								'origin-left duration-300',
-								isOpen ? '' : 'hidden',
-							]"
+						<ResponsiveNavLink
+							:href="route('logout')"
+							method="post"
+							as="button"
+							class="w-full text-start"
 						>
-							Logout
-						</span>
-					</Link>
+							Log Out
+						</ResponsiveNavLink>
+					</div>
 				</div>
-			</nav>
-		</aside>
+			</div>
+		</nav>
 
 		<!-- Page Content -->
-		<main class="w-full bg-ghost">
-			<header class="bg-white px-8 py-4 font-bold shadow-md">
-				<slot name="header">Header</slot>
-			</header>
-
-			<main class="w-full p-8">
-				<slot>content</slot>
-			</main>
+		<main class="container py-8">
+			<!-- <div class="rounded-xl bg-white p-8 shadow-xl"> -->
+			<slot />
+			<!-- </div> -->
 		</main>
 	</div>
 </template>

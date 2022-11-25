@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Dashboard\PostController as DashboardPost;
+use App\Http\Controllers\Dashboard\CategoryController as DashboardCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,13 @@ Route::controller(CategoryController::class)->group(function () {
 });
 
 //! Dashboard
-Route::prefix('dashboard')->middleware(['auth', 'verified'])->name('dashboard')->group(function () {
-	Route::get('/', fn () => inertia('Dashboard/Home'));
+Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
+	Route::get('/', fn () => inertia('Dashboard/Home'))->name('dashboard');
+
+	Route::name('dashboard.')->group(function () {
+		Route::resources([
+			'/posts' => DashboardPost::class,
+			'/categories' => DashboardCategory::class
+		]);
+	});
 });
