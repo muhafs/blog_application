@@ -5,8 +5,8 @@
 		<h2 class="pl-4 text-2xl font-bold uppercase text-primary">My Posts</h2>
 
 		<Link
+			class="flex items-center gap-x-2 rounded-full bg-primary py-2 px-4 text-xs uppercase text-secondary duration-300 hover:bg-white hover:text-blue-500"
 			:href="route('dashboard.posts.create')"
-			class="flex items-center gap-x-1 rounded-full bg-primary py-2 px-4 text-xs uppercase text-secondary"
 		>
 			<span>
 				<svg
@@ -61,8 +61,8 @@
 							class="flex items-center justify-center gap-x-1 py-4 px-6"
 						>
 							<Link
-								:href="route('dashboard.posts.show', post.id)"
-								class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-sky-500"
+								:href="route('dashboard.posts.show', post.slug)"
+								class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-orange-500"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@
 							</Link>
 
 							<Link
-								:href="route('dashboard.posts.edit', post.id)"
+								:href="route('dashboard.posts.edit', post.slug)"
 								class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-teal-500"
 							>
 								<svg
@@ -103,7 +103,7 @@
 
 							<Link
 								:href="
-									route('dashboard.posts.destroy', post.id)
+									route('dashboard.posts.destroy', post.slug)
 								"
 								method="delete"
 								as="button"
@@ -158,8 +158,18 @@
 
 <script setup>
 import moment from "moment";
-const props = defineProps(["posts"]);
+import { reactive, ref } from "vue";
 
+// Properties
+const props = defineProps(["posts"]);
+// const isModalOpen = ref(true);
+// const form = reactive({
+// 	title: "",
+// 	content: "",
+// 	category: "",
+// });
+
+// Methods
 function formatDate(date) {
 	return moment(date).format("MMM D YYYY - h:mm a");
 }
