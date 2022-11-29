@@ -4,6 +4,13 @@
 	<div class="mb-4 flex items-center justify-between">
 		<h2 class="pl-4 text-2xl font-bold uppercase text-primary">My Posts</h2>
 
+		<div
+			v-if="$page.props.flash.message"
+			class="rounded-full bg-secondary px-4 py-1 text-center text-primary"
+		>
+			{{ $page.props.flash.message }}
+		</div>
+
 		<Link
 			class="flex items-center gap-x-2 rounded-full bg-primary py-2 px-4 text-xs uppercase text-secondary duration-300 hover:bg-white hover:text-blue-500"
 			:href="route('dashboard.posts.create')"

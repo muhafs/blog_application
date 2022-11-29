@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
@@ -29,7 +30,9 @@ class PostController extends Controller
 	 */
 	public function create()
 	{
-		return inertia('Dashboard/Post/Create');
+		$categories = Category::get(['id', 'name']);
+
+		return inertia('Dashboard/Post/Create', compact('categories'));
 	}
 
 	/**
@@ -40,7 +43,18 @@ class PostController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		$request->validate([
+			'title' => 'required|string',
+			'content' => 'required|string',
+			'category_id' => 'required|numeric',
+		]);
+
+		$request['user_id'] = auth()->id();
+		$request['slug'] = str($request->title)->slug('-');
+
+		Post::create($request->all());
+
+		return redirect(route('dashboard.posts.index'))->with('message', 'Post successfully created');
 	}
 
 	/**
@@ -85,6 +99,8 @@ class PostController extends Controller
 	 */
 	public function destroy(Post $post)
 	{
-		dd("{$post->id} deleted");
+		$post->delete();
+
+		return redirect(route('dashboard.posts.index'))->with('message', 'Post deleted successfully');
 	}
 }
