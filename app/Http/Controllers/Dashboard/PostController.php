@@ -44,9 +44,9 @@ class PostController extends Controller
 	public function store(Request $request)
 	{
 		$request->validate([
-			'title' => 'required|string',
+			'title' => 'required|string|unique:posts,title',
 			'content' => 'required|string',
-			'category_id' => 'required|numeric',
+			'category_id' => 'required|numeric|exists:categories,id',
 		]);
 
 		$request['user_id'] = auth()->id();
@@ -65,6 +65,10 @@ class PostController extends Controller
 	 */
 	public function show(Post $post)
 	{
+		if ($post->user_id !== auth()->id()) {
+			abort(404);
+		}
+
 		return inertia('Dashboard/Post/Show', compact('post'));
 	}
 
@@ -76,7 +80,13 @@ class PostController extends Controller
 	 */
 	public function edit(Post $post)
 	{
-		return inertia('Dashboard/Post/Edit', compact('post'));
+		if ($post->user_id !== auth()->id()) {
+			abort(404);
+		}
+
+		$categories = Category::all();
+
+		return inertia('Dashboard/Post/Edit', compact('post', 'categories'));
 	}
 
 	/**
@@ -88,7 +98,17 @@ class PostController extends Controller
 	 */
 	public function update(Request $request, Post $post)
 	{
-		//
+		$request->validate([
+			'title' => "required|string|unique:posts,title,{$post->id}",
+			'content' => 'required|string',
+			'category_id' => 'required|numeric|exists:categories,id',
+		]);
+
+		$request['slug'] = str($request->title)->slug('-');
+
+		$post->update($request->all());
+
+		return redirect(route('dashboard.posts.index'))->with('message', 'Post successfully updated');
 	}
 
 	/**

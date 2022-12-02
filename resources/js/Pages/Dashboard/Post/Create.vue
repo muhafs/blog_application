@@ -13,14 +13,22 @@
 					class="ml-2 mb-1 block font-bold uppercase tracking-wide text-primary"
 					>title</label
 				>
+
 				<input
 					id="title"
 					type="text"
-					class="block w-full rounded-3xl border border-primary/30 bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base"
+					:class="[
+						'block w-full rounded-3xl border  bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base',
+						errors.title ? 'border-red-600' : 'border-primary/30',
+					]"
 					placeholder="john.doe@company.com"
 					required
 					v-model="form.title"
 				/>
+
+				<p v-if="errors.title" class="ml-4 mt-1 text-sm text-red-600">
+					{{ errors.title }}
+				</p>
 			</div>
 
 			<div class="mb-4">
@@ -29,13 +37,21 @@
 					class="ml-2 mb-1 block font-bold uppercase tracking-wide text-primary"
 					>content</label
 				>
+
 				<textarea
 					id="content"
 					rows="4"
-					class="block w-full rounded-3xl border border-primary/30 bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base"
+					:class="[
+						'block w-full rounded-3xl border  bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base',
+						errors.content ? 'border-red-600' : 'border-primary/30',
+					]"
 					placeholder="Content..."
 					v-model="form.content"
 				></textarea>
+
+				<p v-if="errors.content" class="ml-4 mt-1 text-sm text-red-600">
+					{{ errors.content }}
+				</p>
 			</div>
 
 			<div class="mb-4">
@@ -48,7 +64,12 @@
 				<select
 					id="categories"
 					v-model="form.category_id"
-					class="block w-full rounded-3xl border border-primary/30 bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base"
+					:class="[
+						'block w-full rounded-3xl border  bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base',
+						errors.category_id
+							? 'border-red-600'
+							: 'border-primary/30',
+					]"
 				>
 					<option selected class="hidden" value="0">
 						Choose a category
@@ -61,6 +82,13 @@
 						{{ category.name }}
 					</option>
 				</select>
+
+				<p
+					v-if="errors.category_id"
+					class="ml-4 mt-1 text-sm text-red-600"
+				>
+					{{ errors.category_id }}
+				</p>
 			</div>
 
 			<hr class="mt-8 block border border-primary/20" />
@@ -87,7 +115,7 @@
 <script setup>
 import { useForm } from "@inertiajs/inertia-vue3";
 
-const props = defineProps(["categories"]);
+const props = defineProps(["errors", "categories"]);
 
 const form = useForm({
 	title: "",

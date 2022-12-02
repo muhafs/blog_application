@@ -108,12 +108,8 @@
 								</svg>
 							</Link>
 
-							<Link
-								:href="
-									route('dashboard.posts.destroy', post.slug)
-								"
-								method="delete"
-								as="button"
+							<button
+								@click="deletePost(post.slug)"
 								class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-red-500"
 							>
 								<svg
@@ -143,7 +139,7 @@
 										y2="17"
 									></line>
 								</svg>
-							</Link>
+							</button>
 						</td>
 					</tr>
 				</template>
@@ -164,20 +160,20 @@
 </template>
 
 <script setup>
+import { Inertia } from "@inertiajs/inertia";
 import moment from "moment";
-import { reactive, ref } from "vue";
 
 // Properties
 const props = defineProps(["posts"]);
-// const isModalOpen = ref(true);
-// const form = reactive({
-// 	title: "",
-// 	content: "",
-// 	category: "",
-// });
 
 // Methods
 function formatDate(date) {
 	return moment(date).format("MMM D YYYY - h:mm a");
+}
+
+function deletePost(slug) {
+	if (confirm("are you sure ?")) {
+		Inertia.delete(route("dashboard.posts.destroy", slug));
+	}
 }
 </script>
