@@ -53,3 +53,12 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
 		]);
 	});
 });
+
+//! Upload Media
+Route::middleware(['auth', 'verified'])->group(function () {
+	Route::post('/upload-post-img', [DashboardPost::class, 'upload'])->name('upload-postImg');
+	Route::post('/upload-post-revert', [DashboardPost::class, 'uploadRevert'])->name('upload-postRev');
+
+	Route::post('/upload-category-img', [DashboardCategory::class, 'upload'])->name('upload-categoryImg');
+	Route::post('/upload-category-revert', [DashboardCategory::class, 'uploadRevert'])->name('upload-categoryRev');
+});

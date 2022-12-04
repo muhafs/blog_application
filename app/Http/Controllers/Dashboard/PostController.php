@@ -54,6 +54,8 @@ class PostController extends Controller
 
 		Post::create($request->all());
 
+		// $this->processImg($request);
+
 		return redirect(route('dashboard.posts.index'))->with('message', 'Post successfully created');
 	}
 
@@ -106,7 +108,17 @@ class PostController extends Controller
 
 		$request['slug'] = str($request->title)->slug('-');
 
+		if ($post->image && !str_contains($post->image, 'default.png')) {
+			$path = storage_path('app/public/' . $post->image);
+
+			if (file_exists($path)) {
+				unlink($path);
+			}
+		}
+
 		$post->update($request->all());
+
+		// $this->processImg($request);
 
 		return redirect(route('dashboard.posts.index'))->with('message', 'Post successfully updated');
 	}
@@ -119,8 +131,52 @@ class PostController extends Controller
 	 */
 	public function destroy(Post $post)
 	{
+		if ($post->image && !str_contains($post->image, 'default.png')) {
+			$path = storage_path('app/public/' . $post->image);
+
+			if (file_exists($path)) {
+				unlink($path);
+			}
+		}
+
 		$post->delete();
 
 		return redirect(route('dashboard.posts.index'))->with('message', 'Post deleted successfully');
 	}
+
+	public function upload(Request $request)
+	{
+		if ($request->hasFile('image')) {
+			return $request->file('image')->store('uploads/posts', 'public');
+		}
+
+		return false;
+	}
+
+	public function uploadRevert(Request $request)
+	{
+		if ($image = $request->get('image')) {
+			$path = storage_path('app/public/' . $image);
+
+			if (file_exists($path)) {
+				unlink($path);
+			}
+		}
+
+		return false;
+	}
+
+	// public function processImg(Request $request)
+	// {
+	// 	if ($image = $request->get('image')) {
+	// 		$path = storage_path('app/public/' . $image);
+
+	// 		if (file_exists($path)) {
+	// 			copy($path, public_path($image));
+	// 			unlink($path);
+	// 		}
+	// 	}
+
+	// 	return false;
+	// }
 }

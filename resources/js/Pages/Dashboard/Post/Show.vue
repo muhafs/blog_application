@@ -18,8 +18,9 @@
 		<main class="px-6 py-4">
 			<div class="relative overflow-hidden rounded-3xl">
 				<img
-					src="https://via.placeholder.com/600x200"
-					class="w-full rounded-sm object-cover shadow-md"
+					:src="'/storage/' + post.image"
+					:alt="post.title"
+					class="h-[300px] w-full rounded-sm object-cover shadow-md"
 				/>
 
 				<span

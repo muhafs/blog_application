@@ -42,6 +42,7 @@
 			>
 				<tr>
 					<th class="py-3 px-6">#</th>
+					<th class="py-3 px-6">Image</th>
 					<th class="py-3 px-6">Title</th>
 					<th class="py-3 px-6">Category</th>
 					<th class="py-3 px-6">Created at</th>
@@ -57,6 +58,13 @@
 						class="border-b bg-white transition last:border-none hover:bg-ghost"
 					>
 						<th class="py-4 px-6">{{ ++i }}</th>
+						<th class="py-4 px-6">
+							<img
+								:src="'/storage/' + post.image"
+								:alt="post.title"
+								class="h-16 w-full rounded-xl object-cover"
+							/>
+						</th>
 						<td class="whitespace-nowrap py-4 px-6">
 							{{ post.title }}
 						</td>
@@ -65,7 +73,7 @@
 							{{ formatDate(post.created_at) }}
 						</td>
 						<td
-							class="flex items-center justify-center gap-x-1 py-4 px-6"
+							class="flex h-full items-center justify-center gap-x-1 py-4 px-6"
 						>
 							<Link
 								:href="route('dashboard.posts.show', post.slug)"
