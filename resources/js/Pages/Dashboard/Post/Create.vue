@@ -42,7 +42,7 @@
 					>content</label
 				>
 
-				<textarea
+				<!-- <textarea
 					id="content"
 					rows="4"
 					:class="[
@@ -51,7 +51,13 @@
 					]"
 					placeholder="Content..."
 					v-model="form.content"
-				></textarea>
+				></textarea> -->
+				<ckeditor
+					class="rounded-xl"
+					:editor="editor"
+					v-model="form.content"
+					:config="editorConfig"
+				></ckeditor>
 
 				<p v-if="errors.content" class="ml-4 mt-1 text-sm text-red-600">
 					{{ errors.content }}
@@ -162,6 +168,9 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 import axios from "axios";
 
+// Import CKEditor 5
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 // Import FilePond
 import vueFilePond from "vue-filepond";
 // Import plugins
@@ -205,7 +214,14 @@ function handleFilePondRevert(uniqueID, load, error) {
 	load();
 }
 
+const editor = ref(ClassicEditor);
+const editorConfig = ref({
+	// The configuration of the editor.
+	toolbar: ["heading", "bold", "italic", "|", "link"],
+});
+
 function submit() {
+	// console.log(form);
 	form.post("/dashboard/posts", form);
 }
 </script>

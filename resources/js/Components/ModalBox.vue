@@ -12,21 +12,7 @@
 			v-show="isOpen"
 			class="fixed top-1/2 left-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl bg-white"
 		>
-			<header
-				class="w-full bg-primary px-8 py-4 text-center text-xl font-bold uppercase text-secondary"
-			>
-				create
-			</header>
-
-			<main class="px-8 py-4">
-				<slot></slot>
-			</main>
-
-			<footer
-				class="flex justify-between border-t border-primary/20 px-8 py-4"
-			>
-				<slot name="footer"></slot>
-			</footer>
+			<slot></slot>
 		</div>
 	</Transition>
 </template>

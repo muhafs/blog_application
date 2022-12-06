@@ -18,9 +18,10 @@ class PostController extends Controller
 	public function index()
 	{
 		$posts = PostResource::collection(Post::where('user_id', auth()->id())->latest()->paginate(10))->response()->getData(true);
+		$categories = Category::all();
 
 		// return $posts;
-		return inertia('Dashboard/Post/Index', compact('posts'));
+		return inertia('Dashboard/Post/Index', compact('posts', 'categories'));
 	}
 
 	/**
@@ -51,6 +52,7 @@ class PostController extends Controller
 
 		$request['user_id'] = auth()->id();
 		$request['slug'] = str($request->title)->slug('-');
+		$request['image'] = $request->image ?? '/uploads/posts/default.png';
 
 		Post::create($request->all());
 
@@ -108,7 +110,14 @@ class PostController extends Controller
 
 		$request['slug'] = str($request->title)->slug('-');
 
-		if ($post->image && !str_contains($post->image, 'default.png')) {
+		// default -> default // nothing
+		// img1 -> img1 // nothing
+		// img1 -> default // nothing
+		// default -> img1 // remove
+		// img1 -> img2 // remove
+		// default -> null // nothing
+		// null -> null // nothing
+		if (!str_contains($post->image, 'default.png') && $post->image != $request->image && $post->image != null && $post->image != "") {
 			$path = storage_path('app/public/' . $post->image);
 
 			if (file_exists($path)) {

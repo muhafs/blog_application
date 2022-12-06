@@ -30,9 +30,10 @@
 				</span>
 			</div>
 
-			<p class="my-4 ml-2 text-base font-light text-slate-700">
-				{{ post.content }}
-			</p>
+			<p
+				class="my-4 ml-2 text-base font-light text-slate-700"
+				v-html="post.content"
+			></p>
 		</main>
 	</article>
 </template>

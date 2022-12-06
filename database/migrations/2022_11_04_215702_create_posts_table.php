@@ -20,7 +20,7 @@ return new class extends Migration
 			$table->string('title');
 			$table->string('slug')->unique();
 			$table->text('content');
-			$table->string('image')->default('uploads/categories/default.png')->nullable();
+			$table->string('image')->default('uploads/posts/default.png')->nullable();
 			$table->timestamp('published_at')->nullable();
 			$table->timestamps();
 		});
