@@ -3,14 +3,14 @@
 		<div
 			v-show="isOpen"
 			@click="$emit('close-modal')"
-			class="absolute top-0 left-0 right-0 bottom-0 z-40 bg-black/30"
+			class="absolute top-0 left-0 right-0 bottom-0 z-40 min-h-screen bg-black/30"
 		></div>
 	</Transition>
 
 	<Transition name="slide" appear>
 		<div
 			v-show="isOpen"
-			class="fixed top-1/2 left-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl bg-white"
+			class="fixed top-1/2 left-1/2 z-50 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl bg-white"
 		>
 			<slot></slot>
 		</div>
