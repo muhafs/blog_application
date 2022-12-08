@@ -1,8 +1,10 @@
 <template>
-	<Head title="Dashboard Posts" />
+	<Head title="Dashboard Category" />
 
 	<div class="mb-4 flex items-center justify-between">
-		<h2 class="pl-4 text-2xl font-bold uppercase text-primary">My Posts</h2>
+		<h2 class="pl-4 text-2xl font-bold uppercase text-primary">
+			My Categories
+		</h2>
 
 		<div
 			v-if="$page.props.flash.message"
@@ -31,46 +33,44 @@
 					<line x1="8" y1="12" x2="16" y2="12"></line>
 				</svg>
 			</span>
-			<span> new post </span>
+			<span> new category </span>
 		</button>
 	</div>
 
 	<div class="relative overflow-x-auto rounded-2xl shadow-xl">
-		<table class="w-full text-left text-sm font-medium text-primary">
+		<table class="w-full text-center text-sm font-medium text-primary">
 			<thead
 				class="bg-primary text-xs font-bold uppercase text-secondary"
 			>
 				<tr>
 					<th class="py-3 px-6">#</th>
 					<th class="py-3 px-6">Image</th>
-					<th class="py-3 px-6">Title</th>
-					<th class="py-3 px-6">Category</th>
+					<th class="py-3 px-6">Name</th>
 					<th class="py-3 px-6">Created at</th>
 					<th class="py-3 px-6 text-center">Action</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<template v-if="posts.data.length">
+				<template v-if="categories.length">
 					<tr
-						v-for="(post, i) in posts.data"
-						:key="post.id"
+						v-for="(category, i) in categories"
+						:key="category.id"
 						class="border-b bg-white transition last:border-none hover:bg-ghost"
 					>
 						<th class="py-4 px-6">{{ ++i }}</th>
 						<th class="py-4 px-6">
 							<img
-								:src="'/storage/' + post.image"
-								:alt="post.title"
+								:src="'/storage/' + category.image"
+								:alt="category.name"
 								class="h-16 w-full rounded-xl object-cover"
 							/>
 						</th>
 						<td class="whitespace-nowrap py-4 px-6">
-							{{ post.title }}
+							{{ category.name }}
 						</td>
-						<td class="py-4 px-6">{{ post.category }}</td>
 						<td class="py-4 px-6">
-							{{ formatDate(post.created_at) }}
+							{{ formatDate(category.created_at) }}
 						</td>
 						<td class="py-4 px-6">
 							<div
@@ -78,7 +78,10 @@
 							>
 								<Link
 									:href="
-										route('dashboard.posts.show', post.slug)
+										route(
+											'dashboard.categories.show',
+											category.id
+										)
 									"
 									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-orange-500"
 								>
@@ -100,7 +103,7 @@
 								</Link>
 
 								<button
-									@click="openModal(post)"
+									@click="openModal(category)"
 									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-teal-500"
 								>
 									<svg
@@ -120,7 +123,7 @@
 								</button>
 
 								<button
-									@click="deletePost(post.slug)"
+									@click="deleteCategory(category.id)"
 									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-red-500"
 								>
 									<svg
@@ -158,13 +161,13 @@
 					</tr>
 				</template>
 
-				<!--! No Posts -->
+				<!--! No Categories -->
 				<template v-else>
 					<tr
 						class="border-b bg-white transition last:border-none hover:bg-ghost"
 					>
 						<th colspan="6" class="py-4 px-6 text-center">
-							User hasn't created any posts yet
+							User has no categories yet
 						</th>
 					</tr>
 				</template>
@@ -181,100 +184,33 @@
 
 		<form @submit.prevent="submitForm()" enctype="multipart/form-data">
 			<main class="px-8 py-4">
-				<div class="grid grid-cols-4 gap-4">
-					<div class="col-span-3 mb-4">
-						<div class="mb-4">
-							<label
-								for="title"
-								class="ml-2 mb-1 block font-bold uppercase tracking-wide text-primary"
-								>title</label
-							>
+				<div class="grid grid-cols-2 gap-4">
+					<div class="mb-4">
+						<label
+							for="name"
+							class="ml-2 mb-1 block font-bold uppercase tracking-wide text-primary"
+							>name</label
+						>
 
-							<input
-								id="title"
-								type="text"
-								:class="[
-									'block w-full rounded-3xl border  bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base',
-									errors.title
-										? 'border-red-600'
-										: 'border-primary/30',
-								]"
-								placeholder="Title..."
-								v-model="form.title"
-							/>
+						<input
+							id="name"
+							type="text"
+							:class="[
+								'block w-full rounded-3xl border  bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base',
+								errors.name
+									? 'border-red-600'
+									: 'border-primary/30',
+							]"
+							placeholder="Name..."
+							v-model="form.name"
+						/>
 
-							<p
-								v-if="errors.title"
-								class="ml-4 mt-1 text-sm text-red-600"
-							>
-								{{ errors.title }}
-							</p>
-						</div>
-
-						<div class="mb-4">
-							<label
-								for="content"
-								class="ml-2 mb-1 block font-bold uppercase tracking-wide text-primary"
-								>content</label
-							>
-
-							<textarea
-								id="content"
-								rows="4"
-								:class="[
-									'block w-full rounded-3xl border  bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base',
-									errors.content
-										? 'border-red-600'
-										: 'border-primary/30',
-								]"
-								placeholder="Content..."
-								v-model="form.content"
-							></textarea>
-
-							<p
-								v-if="errors.content"
-								class="ml-4 mt-1 text-sm text-red-600"
-							>
-								{{ errors.content }}
-							</p>
-						</div>
-
-						<div class="mb-4">
-							<label
-								for="categories"
-								class="ml-2 mb-1 block font-bold uppercase tracking-wide text-primary"
-								>category</label
-							>
-
-							<select
-								id="categories"
-								v-model="form.category"
-								:class="[
-									'block w-full rounded-3xl border  bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base',
-									errors.category
-										? 'border-red-600'
-										: 'border-primary/30',
-								]"
-							>
-								<option selected class="hidden" value="0">
-									-- Choose a category --
-								</option>
-								<option
-									v-for="category in categories"
-									:key="category.id"
-									:value="category.id"
-								>
-									{{ category.name }}
-								</option>
-							</select>
-
-							<p
-								v-if="errors.category"
-								class="ml-4 mt-1 text-sm text-red-600"
-							>
-								{{ errors.category }}
-							</p>
-						</div>
+						<p
+							v-if="errors.name"
+							class="ml-4 mt-1 text-sm text-red-600"
+						>
+							{{ errors.name }}
+						</p>
 					</div>
 
 					<div class="mb-4">
@@ -292,7 +228,7 @@
 								url: '',
 								timeout: 7000,
 								process: {
-									url: '/upload-post-img',
+									url: '/upload-category-img',
 									method: 'POST',
 									headers: {
 										'X-CSRF-TOKEN': $page.props.csrf_token,
@@ -365,7 +301,7 @@ const FilePond = vueFilePond(
 );
 const myFiles = ref([]);
 function handleFilePondInit() {
-	console.log("initialize done");
+	// console.log("initialize done");
 	if (form.image) {
 		myFiles.value = [
 			{
@@ -386,11 +322,11 @@ function handleFilePondLoad(response) {
 	form.image = response;
 }
 function handleFilePondRemove(source, load, error) {
-	form.image = "/uploads/posts/default.png";
+	form.image = "/uploads/categories/default.png";
 	load();
 }
 function handleFilePondRevert(uniqueID, load, error) {
-	axios.post("/upload-post-revert", {
+	axios.post("/upload-category-revert", {
 		image: form.image,
 	});
 
@@ -398,14 +334,12 @@ function handleFilePondRevert(uniqueID, load, error) {
 }
 
 // Properties
-const props = defineProps(["posts", "errors", "categories"]);
+const props = defineProps(["errors", "categories"]);
 
 const isModalOpen = ref(false);
 const isEditable = ref(false);
 const form = useForm({
-	title: "",
-	content: "",
-	category: 0,
+	name: "",
 	image: "",
 });
 
@@ -413,24 +347,22 @@ const form = useForm({
 function formatDate(date) {
 	return moment(date).format("MMM D YYYY - h:mm a");
 }
-function openModal(post = null) {
+function openModal(category = null) {
 	isModalOpen.value = true;
-	isEditable.value = post ? true : false;
+	isEditable.value = category ? true : false;
 
-	form.slug = post ? post.slug : "";
-	form.title = post ? post.title : "";
-	form.content = post ? post.content : "";
-	form.category = post ? post.category_id : 0;
-	form.image = post ? post.image : "";
+	form.id = category ? category.id : null;
+	form.name = category ? category.name : "";
+	form.image = category ? category.image : "";
 
 	if (usePage().props.value.errors) usePage().props.value.errors = {};
 
 	handleFilePondInit();
 }
 function submitForm() {
-	let url = "/dashboard/posts";
+	let url = "/dashboard/categories";
 	if (isEditable.value) {
-		url = `${url}/${form.slug}`;
+		url = `${url}/${form.id}`;
 
 		form.put(url, {
 			onSuccess: (page) => {
@@ -447,9 +379,9 @@ function submitForm() {
 		});
 	}
 }
-function deletePost(slug) {
+function deleteCategory(id) {
 	if (confirm("are you sure ?")) {
-		Inertia.delete(route("dashboard.posts.destroy", slug));
+		Inertia.delete(route("dashboard.categories.destroy", id));
 	}
 }
 </script>

@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    protected $guraded = [];
+	// protected $guraded = [];
+	protected $fillable = ['name', 'slug', 'image'];
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class, 'category_id', 'id');
-    }
+	public function posts()
+	{
+		return $this->hasMany(Post::class, 'category_id', 'id');
+	}
 }
