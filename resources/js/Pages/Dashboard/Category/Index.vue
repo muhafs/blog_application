@@ -179,7 +179,7 @@
 		<header
 			class="w-full bg-primary px-8 py-4 text-center text-xl font-bold uppercase text-secondary"
 		>
-			{{ isEditable ? "Edit" : "Create New" }} Post
+			{{ isEditable ? "Edit" : "Create New" }} Category
 		</header>
 
 		<form @submit.prevent="submitForm()" enctype="multipart/form-data">
