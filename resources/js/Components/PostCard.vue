@@ -2,7 +2,7 @@
 	<article class="overflow-hidden rounded-3xl bg-white shadow-lg">
 		<div class="relative overflow-hidden rounded-b-3xl">
 			<img
-				src="https://via.placeholder.com/500x400"
+				:src="'/storage/' + post.image"
 				class="h-64 w-full object-cover"
 			/>
 
@@ -29,9 +29,10 @@
 				</span>
 			</h3>
 
-			<p class="mb-4 min-h-[40px] text-base">
-				{{ `${post.content.slice(0, 50)}...` }}
-			</p>
+			<p
+				class="mb-4 min-h-[40px] text-base"
+				v-html="`${post.content.slice(0, 50)}...`"
+			></p>
 
 			<PrimaryButton :url="route('blog-detail', post.slug)" />
 		</div>
@@ -43,11 +44,4 @@ import moment from "moment";
 import PrimaryButton from "./PrimaryButton.vue";
 
 const props = defineProps(["post"]);
-// img
-// category link
-// category tag
-// title
-// author
-// created date
-// detail link
 </script>

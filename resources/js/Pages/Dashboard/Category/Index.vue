@@ -2,39 +2,11 @@
 	<Head title="Dashboard Category" />
 
 	<div class="mb-4 flex items-center justify-between">
-		<h2 class="pl-4 text-2xl font-bold uppercase text-primary">
-			My Categories
-		</h2>
+		<HeaderTitle content="my categories" />
 
-		<div
-			v-if="$page.props.flash.message"
-			class="rounded-full bg-secondary px-4 py-1 text-center text-primary"
-		>
-			{{ $page.props.flash.message }}
-		</div>
+		<FlashMessage />
 
-		<button
-			class="flex items-center gap-x-2 rounded-full bg-primary py-2 px-4 text-xs uppercase text-secondary duration-300 hover:bg-white hover:text-blue-500"
-			@click="openModal()"
-		>
-			<span>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="feather feather-plus-circle inline h-4 w-4"
-				>
-					<circle cx="12" cy="12" r="10"></circle>
-					<line x1="12" y1="8" x2="12" y2="16"></line>
-					<line x1="8" y1="12" x2="16" y2="12"></line>
-				</svg>
-			</span>
-			<span> new category </span>
-		</button>
+		<CreateButton @click="openModal()" content="category" />
 	</div>
 
 	<div class="relative overflow-x-auto rounded-2xl shadow-xl">
@@ -42,13 +14,7 @@
 			<thead
 				class="bg-primary text-xs font-bold uppercase text-secondary"
 			>
-				<tr>
-					<th class="py-3 px-6">#</th>
-					<th class="py-3 px-6">Image</th>
-					<th class="py-3 px-6">Name</th>
-					<th class="py-3 px-6">Created at</th>
-					<th class="py-3 px-6 text-center">Action</th>
-				</tr>
+				<TableHead :heads="['Image', 'Name', 'Created at']" />
 			</thead>
 
 			<tbody>
@@ -59,103 +25,18 @@
 						class="border-b bg-white transition last:border-none hover:bg-ghost"
 					>
 						<th class="py-4 px-6">{{ ++i }}</th>
-						<th class="py-4 px-6">
-							<img
-								:src="'/storage/' + category.image"
-								:alt="category.name"
-								class="h-16 w-full rounded-xl object-cover"
-							/>
-						</th>
-						<td class="whitespace-nowrap py-4 px-6">
-							{{ category.name }}
-						</td>
-						<td class="py-4 px-6">
-							{{ formatDate(category.created_at) }}
-						</td>
+
+						<TableBody :content="category" />
+
 						<td class="py-4 px-6">
 							<div
 								class="flex items-center justify-center gap-x-1"
 							>
-								<Link
-									:href="
-										route(
-											'dashboard.categories.show',
-											category.id
-										)
-									"
-									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-orange-500"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										class="feather feather-eye h-4 w-4"
-									>
-										<path
-											d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-										></path>
-										<circle cx="12" cy="12" r="3"></circle>
-									</svg>
-								</Link>
+								<EditButton @click="openModal(category)" />
 
-								<button
-									@click="openModal(category)"
-									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-teal-500"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										class="feather feather-edit-2 h-4 w-4"
-									>
-										<path
-											d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"
-										></path>
-									</svg>
-								</button>
-
-								<button
+								<DeleteButton
 									@click="deleteCategory(category.id)"
-									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-red-500"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										class="feather feather-trash-2 h-4 w-4"
-									>
-										<polyline
-											points="3 6 5 6 21 6"
-										></polyline>
-										<path
-											d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-										></path>
-										<line
-											x1="10"
-											y1="11"
-											x2="10"
-											y2="17"
-										></line>
-										<line
-											x1="14"
-											y1="11"
-											x2="14"
-											y2="17"
-										></line>
-									</svg>
-								</button>
+								/>
 							</div>
 						</td>
 					</tr>
@@ -163,13 +44,10 @@
 
 				<!--! No Categories -->
 				<template v-else>
-					<tr
-						class="border-b bg-white transition last:border-none hover:bg-ghost"
-					>
-						<th colspan="6" class="py-4 px-6 text-center">
-							User has no categories yet
-						</th>
-					</tr>
+					<TableEmpty
+						:cols="5"
+						content="User has no categories yet"
+					/>
 				</template>
 			</tbody>
 		</table>
@@ -257,6 +135,7 @@
 				class="flex justify-between border-t border-primary/20 px-8 py-4"
 			>
 				<button
+					type="button"
 					@click="isModalOpen = false"
 					class="rounded-full bg-secondary py-2 px-4 font-bold uppercase text-primary"
 				>
@@ -275,13 +154,18 @@
 </template>
 
 <script setup>
+import FlashMessage from "@/Components/Dashboard/FlashMessage.vue";
 import ModalBox from "@/Components/ModalBox.vue";
+import CreateButton from "@/Components/Dashboard/CreateButton.vue";
+import HeaderTitle from "@/Components/Dashboard/HeaderTitle.vue";
+import TableHead from "@/Components/Dashboard/TableHead.vue";
+import EditButton from "@/Components/Dashboard/EditButton.vue";
+import DeleteButton from "@/Components/Dashboard/DeleteButton.vue";
+
 import { Inertia } from "@inertiajs/inertia";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
-import axios from "axios";
-
-import moment from "moment";
 import { ref } from "vue";
+import axios from "axios";
 
 // Import FilePond
 import vueFilePond from "vue-filepond";
@@ -293,6 +177,8 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
 import "filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css";
+import TableBody from "@/Components/Dashboard/TableBody.vue";
+import TableEmpty from "@/Components/Dashboard/TableEmpty.vue";
 // Create FilePond component
 const FilePond = vueFilePond(
 	FilePondPluginFileValidateType,
@@ -301,7 +187,6 @@ const FilePond = vueFilePond(
 );
 const myFiles = ref([]);
 function handleFilePondInit() {
-	// console.log("initialize done");
 	if (form.image) {
 		myFiles.value = [
 			{
@@ -344,9 +229,6 @@ const form = useForm({
 });
 
 // Methods
-function formatDate(date) {
-	return moment(date).format("MMM D YYYY - h:mm a");
-}
 function openModal(category = null) {
 	isModalOpen.value = true;
 	isEditable.value = category ? true : false;

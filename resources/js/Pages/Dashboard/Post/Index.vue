@@ -2,37 +2,11 @@
 	<Head title="Dashboard Posts" />
 
 	<div class="mb-4 flex items-center justify-between">
-		<h2 class="pl-4 text-2xl font-bold uppercase text-primary">My Posts</h2>
+		<HeaderTitle content="my posts" />
 
-		<div
-			v-if="$page.props.flash.message"
-			class="rounded-full bg-secondary px-4 py-1 text-center text-primary"
-		>
-			{{ $page.props.flash.message }}
-		</div>
+		<FlashMessage />
 
-		<button
-			class="flex items-center gap-x-2 rounded-full bg-primary py-2 px-4 text-xs uppercase text-secondary duration-300 hover:bg-white hover:text-blue-500"
-			@click="openModal()"
-		>
-			<span>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="feather feather-plus-circle inline h-4 w-4"
-				>
-					<circle cx="12" cy="12" r="10"></circle>
-					<line x1="12" y1="8" x2="12" y2="16"></line>
-					<line x1="8" y1="12" x2="16" y2="12"></line>
-				</svg>
-			</span>
-			<span> new post </span>
-		</button>
+		<CreateButton @click="openModal()" content="post" />
 	</div>
 
 	<div class="relative overflow-x-auto rounded-2xl shadow-xl">
@@ -40,14 +14,9 @@
 			<thead
 				class="bg-primary text-xs font-bold uppercase text-secondary"
 			>
-				<tr>
-					<th class="py-3 px-6">#</th>
-					<th class="py-3 px-6">Image</th>
-					<th class="py-3 px-6">Title</th>
-					<th class="py-3 px-6">Category</th>
-					<th class="py-3 px-6">Created at</th>
-					<th class="py-3 px-6 text-center">Action</th>
-				</tr>
+				<TableHead
+					:heads="['Image', 'Title', 'Category', 'Created at']"
+				/>
 			</thead>
 
 			<tbody>
@@ -58,6 +27,7 @@
 						class="border-b bg-white transition last:border-none hover:bg-ghost"
 					>
 						<th class="py-4 px-6">{{ ++i }}</th>
+
 						<th class="py-4 px-6">
 							<img
 								:src="'/storage/' + post.image"
@@ -72,87 +42,20 @@
 						<td class="py-4 px-6">
 							{{ formatDate(post.created_at) }}
 						</td>
+
 						<td class="py-4 px-6">
 							<div
 								class="flex items-center justify-center gap-x-1"
 							>
-								<Link
+								<ShowButton
 									:href="
 										route('dashboard.posts.show', post.slug)
 									"
-									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-orange-500"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										class="feather feather-eye h-4 w-4"
-									>
-										<path
-											d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-										></path>
-										<circle cx="12" cy="12" r="3"></circle>
-									</svg>
-								</Link>
+								/>
 
-								<button
-									@click="openModal(post)"
-									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-teal-500"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										class="feather feather-edit-2 h-4 w-4"
-									>
-										<path
-											d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"
-										></path>
-									</svg>
-								</button>
+								<EditButton @click="openModal(post)" />
 
-								<button
-									@click="deletePost(post.slug)"
-									class="rounded-full bg-primary p-1.5 text-secondary transition hover:bg-white hover:text-red-500"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										class="feather feather-trash-2 h-4 w-4"
-									>
-										<polyline
-											points="3 6 5 6 21 6"
-										></polyline>
-										<path
-											d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-										></path>
-										<line
-											x1="10"
-											y1="11"
-											x2="10"
-											y2="17"
-										></line>
-										<line
-											x1="14"
-											y1="11"
-											x2="14"
-											y2="17"
-										></line>
-									</svg>
-								</button>
+								<DeleteButton @click="deletePost(post.slug)" />
 							</div>
 						</td>
 					</tr>
@@ -160,13 +63,10 @@
 
 				<!--! No Posts -->
 				<template v-else>
-					<tr
-						class="border-b bg-white transition last:border-none hover:bg-ghost"
-					>
-						<th colspan="6" class="py-4 px-6 text-center">
-							User hasn't created any posts yet
-						</th>
-					</tr>
+					<TableEmpty
+						:cols="6"
+						content="User hasn't created any posts yet"
+					/>
 				</template>
 			</tbody>
 		</table>
@@ -218,7 +118,7 @@
 								>content</label
 							>
 
-							<textarea
+							<!-- <textarea
 								id="content"
 								rows="4"
 								:class="[
@@ -229,7 +129,17 @@
 								]"
 								placeholder="Content..."
 								v-model="form.content"
-							></textarea>
+							></textarea> -->
+
+							<TipTapEditor
+								v-model="form.content"
+								:class="[
+									'block w-full rounded-3xl border  bg-ghost px-4 py-2 text-gray-900 placeholder:text-sm placeholder:text-primary/80 focus:border-primary focus:ring-primary sm:text-base',
+									errors.content
+										? 'border-red-600'
+										: 'border-primary/30',
+								]"
+							/>
 
 							<p
 								v-if="errors.content"
@@ -339,25 +249,32 @@
 </template>
 
 <script setup>
+import FlashMessage from "@/Components/Dashboard/FlashMessage.vue";
+import CreateButton from "@/Components/Dashboard/CreateButton.vue";
+import HeaderTitle from "@/Components/Dashboard/HeaderTitle.vue";
+import TableHead from "@/Components/Dashboard/TableHead.vue";
+import ShowButton from "@/Components/Dashboard/ShowButton.vue";
+import EditButton from "@/Components/Dashboard/EditButton.vue";
+import DeleteButton from "@/Components/Dashboard/DeleteButton.vue";
+import TableEmpty from "@/Components/Dashboard/TableEmpty.vue";
 import ModalBox from "@/Components/ModalBox.vue";
+import TipTapEditor from "@/Components/Dashboard/TipTapEditor.vue";
+
 import { Inertia } from "@inertiajs/inertia";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
-import axios from "axios";
-
 import moment from "moment";
 import { ref } from "vue";
+import axios from "axios";
 
-// Import FilePond
 import vueFilePond from "vue-filepond";
-// Import plugins
 import FilePondPluginFilePoster from "filepond-plugin-file-poster";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-// Import styles
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
 import "filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css";
-// Create FilePond component
+
+// FilePond
 const FilePond = vueFilePond(
 	FilePondPluginFileValidateType,
 	FilePondPluginImagePreview,
@@ -365,7 +282,6 @@ const FilePond = vueFilePond(
 );
 const myFiles = ref([]);
 function handleFilePondInit() {
-	console.log("initialize done");
 	if (form.image) {
 		myFiles.value = [
 			{

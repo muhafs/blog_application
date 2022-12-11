@@ -9,11 +9,15 @@ class Category extends Model
 {
 	use HasFactory;
 
-	// protected $guraded = [];
-	protected $fillable = ['name', 'slug', 'image'];
+	protected $guarded = [];
 
 	public function posts()
 	{
 		return $this->hasMany(Post::class, 'category_id', 'id');
 	}
+
+	// public function getRouteKeyName()
+	// {
+	// 	return 'slug';
+	// }
 }

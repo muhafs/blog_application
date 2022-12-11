@@ -25,14 +25,15 @@
 
 		<div class="overflow-hidden rounded-3xl">
 			<img
-				src="https://via.placeholder.com/600x200"
-				class="w-full rounded-sm object-cover shadow-md"
+				:src="'/storage/' + post.image"
+				class="h-64 w-full rounded-sm object-cover shadow-md"
 			/>
 		</div>
 
-		<p class="my-4 text-base font-light text-slate-700">
-			{{ post.content }}
-		</p>
+		<p
+			class="my-4 text-base font-light text-slate-700"
+			v-html="post.content"
+		></p>
 
 		<PrimaryButton :url="route('blog')" content="« back" />
 	</article>

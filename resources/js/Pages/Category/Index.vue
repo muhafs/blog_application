@@ -4,10 +4,6 @@ import CategoryCard from "@/Components/CategoryCard.vue";
 import NotFound from "@/Components/NotFound.vue";
 
 const props = defineProps(["categories"]);
-
-// category img
-// category name
-// category slug
 </script>
 
 <template>

@@ -4,7 +4,7 @@
 	>
 		<div class="overflow-hidden rounded-b-3xl">
 			<img
-				src="https://via.placeholder.com/1200x500"
+				:src="'/storage/' + post.image"
 				class="h-64 w-full object-cover"
 			/>
 		</div>
@@ -34,9 +34,10 @@
 				</span>
 			</h3>
 
-			<p class="mb-4 text-base">
-				{{ `${post.content.slice(0, 100)}...` }}
-			</p>
+			<p
+				class="mb-4 text-base"
+				v-html="`${post.content.slice(0, 100)}...`"
+			></p>
 
 			<PrimaryButton :url="route('blog-detail', post.slug)" />
 		</div>
