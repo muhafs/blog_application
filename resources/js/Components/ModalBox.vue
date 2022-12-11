@@ -11,7 +11,7 @@
 		<Transition name="slide" appear>
 			<div
 				v-show="isOpen"
-				class="relative top-1/2 left-1/2 z-50 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl bg-white"
+				class="fixed top-1/2 left-1/2 z-50 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl bg-white"
 			>
 				<slot></slot>
 			</div>

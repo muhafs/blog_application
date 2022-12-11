@@ -231,6 +231,7 @@
 				class="flex justify-between border-t border-primary/20 px-8 py-4"
 			>
 				<button
+					type="button"
 					@click="isModalOpen = false"
 					class="rounded-full bg-secondary py-2 px-4 font-bold uppercase text-primary"
 				>
